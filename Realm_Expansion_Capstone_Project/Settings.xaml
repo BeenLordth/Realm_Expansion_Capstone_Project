@@ -1,0 +1,34 @@
+﻿<Window x:Class="Realm_Expansion_Capstone_Project.Settings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Realm_Expansion_Capstone_Project"
+        mc:Ignorable="d"
+        Title="Settings" Height="1050" Width="1050">
+    <Grid>
+        <Label x:Name="S_title" Content="Settings" Margin="321,99,322.333,0" VerticalAlignment="Top" FontFamily="Felix Titling" FontSize="80" Width="400"/>
+        <Button x:Name="S_quit" Content="X" Margin="485,30,483.333,0" VerticalAlignment="Top" FontFamily="Felix Titling" FontSize="50" Cursor="Hand" Background="#FFFF8E8E" Click="S_quit_Click"/>
+
+        <StackPanel x:Name="S_name_panel" HorizontalAlignment="Left" Height="auto" Margin="370,246,0,0" VerticalAlignment="Top" Width="auto">
+            <Label x:Name="S_name_label" Content="Name" FontSize="40" HorizontalAlignment="Center" FontFamily="Felix Titling"/>
+            <TextBox x:Name="S_name_txtbx" Height="62" TextWrapping="Wrap" Text="" FontSize="30" Width="300" FontFamily="Felix Titling" AutomationProperties.HelpText="type name here"/>
+        </StackPanel>
+
+        <StackPanel x:Name="S_enemies_panel" HorizontalAlignment="Left" Height="auto" Margin="321,390,0,0" VerticalAlignment="Top" Width="450">
+            <Label x:Name="S_enemies_label" Content="Amount of enemies" FontSize="40" HorizontalAlignment="Center" FontFamily="Felix Titling"/>
+            <RadioButton x:Name="S_enemies_one_btn" Content="One - 1" FontSize="30" IsChecked="True" FontFamily="Felix Titling" Cursor="Hand" VerticalContentAlignment="Center" Height="50"/>
+            <RadioButton x:Name="S_enemies_two_btn" Content="Two - 2" FontSize="30" FontFamily="Felix Titling" Cursor="Hand" VerticalContentAlignment="Center" Height="50"/>
+            <RadioButton x:Name="S_enemies_three_btn" Content="Three - 3" FontSize="30" FontFamily="Felix Titling" Cursor="Hand" VerticalContentAlignment="Center" Height="50"/>
+        </StackPanel>
+
+        <StackPanel x:Name="S_difficulty_panel" HorizontalAlignment="Left" Height="auto" Margin="420,610,0,0" VerticalAlignment="Top" Width="250" >
+            <Label x:Name="S_difficulty_label" Content="Difficulty" FontSize="40" HorizontalAlignment="Center" FontFamily="Felix Titling"/>
+            <RadioButton x:Name="S_difficulty_easy_btn" Content="Easy" FontSize="30" IsChecked="True" FontFamily="Felix Titling" Cursor="Hand" VerticalContentAlignment="Center" Height="50"/>
+            <RadioButton x:Name="S_difficulty_hard_btn" Content="Hard" FontSize="30" FontFamily="Felix Titling" Cursor="Hand" VerticalContentAlignment="Center" Height="50"/>
+        </StackPanel>
+        <Button x:Name="S_play" Content="Play" HorizontalAlignment="Left" Margin="399,827,0,0" FontFamily="Felix Titling" VerticalAlignment="Top" FontSize="50" Cursor="Hand" Background="#FF9BFF8B" Width="246" Click="S_play_Click"/>
+        <Label x:Name="S_warning_label" Content="Warning Label" Margin="271,772,272.333,0" VerticalAlignment="Top" FontFamily="Felix Titling" FontSize="30" Foreground="#FFFF4747" FontWeight="Bold" HorizontalAlignment="Center" Width="500" HorizontalContentAlignment="Center"/>
+
+    </Grid>
+</Window>
