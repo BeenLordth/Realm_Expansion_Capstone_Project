@@ -12,7 +12,7 @@
 
         <StackPanel x:Name="S_name_panel" HorizontalAlignment="Left" Height="auto" Margin="370,246,0,0" VerticalAlignment="Top" Width="auto">
             <Label x:Name="S_name_label" Content="Name" FontSize="40" HorizontalAlignment="Center" FontFamily="Felix Titling"/>
-            <TextBox x:Name="S_name_txtbx" Height="62" TextWrapping="Wrap" Text="" FontSize="30" Width="300" FontFamily="Felix Titling" AutomationProperties.HelpText="type name here"/>
+            <TextBox x:Name="S_name_txtbx" Height="62" TextWrapping="Wrap" Text="test" FontSize="30" Width="300" FontFamily="Felix Titling" AutomationProperties.HelpText="type name here"/>
         </StackPanel>
 
         <StackPanel x:Name="S_enemies_panel" HorizontalAlignment="Left" Height="auto" Margin="321,390,0,0" VerticalAlignment="Top" Width="450">

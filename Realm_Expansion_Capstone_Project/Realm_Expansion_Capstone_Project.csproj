@@ -56,6 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Block.cs" />
+    <Compile Include="Bowmen.cs" />
     <Compile Include="City.cs" />
     <Compile Include="Game.xaml.cs">
       <DependentUpon>Game.xaml</DependentUpon>
@@ -67,6 +68,8 @@
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Swordmen.cs" />
+    <Compile Include="Villager.cs" />
     <Compile Include="WatchTower.cs" />
     <Page Include="Game.xaml">
       <SubType>Designer</SubType>
@@ -124,6 +127,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Sounds\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\city.jpg" />
+    <Resource Include="Assets\Images\grassland.jpg" />
+    <Resource Include="Assets\Images\mountain.jpg" />
+    <Resource Include="Assets\Images\water.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
