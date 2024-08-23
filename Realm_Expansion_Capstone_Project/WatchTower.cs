@@ -9,43 +9,8 @@ namespace Realm_Expansion_Capstone_Project
     /// <summary>
     /// Represents a watch tower found within a game board
     /// </summary>
-    public class WatchTower
+    public class WatchTower : City
     {
-        /// <summary>
-        /// Identifies the current level of the watch tower 
-        /// </summary>
-        private int Level = 1;
-
-        /// <summary>
-        /// identifies the X coordinate of the watch tower (Horizontal)
-        /// </summary>
-        private int XCoordinate;
-
-        /// <summary>
-        /// identifies the Y coordinate of the watch tower (Vertical)
-        /// </summary>
-        private int YCoordinate;
-
-        /// <summary>
-        /// Identifies the owner of the watch tower 
-        /// </summary>
-        private String Owner;
-
-        /// <summary>
-        /// Determintes the current health of the watch tower 
-        /// </summary>
-        private int Health = 550;
-
-        /// <summary>
-        /// Determinte the current attack range of the watch tower
-        /// </summary>
-        private int AttackRange = 3;
-
-        /// <summary>
-        /// Determinte the current attack damage of the watch tower
-        /// </summary>
-        private int AttackDamage = 200;
-
         /// <summary>
         /// Class constructor 
         /// </summary>
@@ -53,10 +18,14 @@ namespace Realm_Expansion_Capstone_Project
         /// <param name="YCoor">Determine where along the Y axis of the board the watch tower will be placed</param>
         /// <param name="owner">Determine the owner of the watch tower</param>
         public WatchTower(int XCoor, int YCoor, String owner)
+            :base(XCoor, YCoor, owner)
         {
             XCoordinate = XCoor;
             YCoordinate = YCoor;
             Owner = owner;
+            Health = 550;
+            AttackRange = 3;
+            AttackDamage = 200;
         }
     }
 }

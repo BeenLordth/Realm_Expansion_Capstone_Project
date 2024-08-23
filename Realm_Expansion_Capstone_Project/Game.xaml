@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Realm_Expansion_Capstone_Project"
         mc:Ignorable="d"
-        Title="Game" Height="1050" Width="1050">
+        Title="Game" Height="1050" Width="1060">
     <Grid x:Name="GameBoardGrid">
-        <WrapPanel x:Name="G_game_board_stack_panel" Height="900" Margin="70,111,73.333,0" VerticalAlignment="Top"/>
+        <WrapPanel x:Name="G_game_board_stack_panel" Height="900" Width="900" Margin="70,111,73.333,0" VerticalAlignment="Top"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="460,45,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.579,0.372"/>
 
     </Grid>
 </Window>

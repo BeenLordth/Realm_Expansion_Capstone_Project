@@ -25,7 +25,27 @@ namespace Realm_Expansion_Capstone_Project
         public Swordmen(int XCoor, int YCoor, String owner) 
             : base(XCoor, YCoor, owner)
         {
+            XCoordinate = XCoor;
+            YCoordinate = YCoor;
+            Owner = owner;
             AttackDamage = 350;
+        }
+
+        /// <summary>
+        /// getter for the Level variable 
+        /// </summary>
+        /// <returns>current level of the swordmen</returns>
+        public int getLevel()
+        {
+            return Level;
+        }
+
+        /// <summary>
+        /// setter for the Level variable 
+        /// </summary>
+        public void setLevel()
+        {
+            Level++;
         }
     }
 }

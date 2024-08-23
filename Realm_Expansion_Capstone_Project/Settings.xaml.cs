@@ -51,10 +51,12 @@ namespace Realm_Expansion_Capstone_Project
 
             if(input.Length < 1)
             {
+                S_warning_label.Visibility = Visibility.Visible;
                 S_warning_label.Content = "Name is too short";
                 return false;
             } else if(input.Length > 15)
             {
+                S_warning_label.Visibility = Visibility.Visible;
                 S_warning_label.Content = "Name is too long";
                 return false;
             }
@@ -63,6 +65,7 @@ namespace Realm_Expansion_Capstone_Project
             {
                 if (!char.IsLetter(i))
                 {
+                    S_warning_label.Visibility = Visibility.Visible;
                     S_warning_label.Content = "Letters only";
                     return false;
                 }

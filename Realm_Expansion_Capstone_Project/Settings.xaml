@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="Settings" Height="1050" Width="1050">
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="Assets/Images/BackgroundImg.png" Opacity="0.5"/>
+        </Grid.Background>
         <Label x:Name="S_title" Content="Settings" Margin="321,99,322.333,0" VerticalAlignment="Top" FontFamily="Felix Titling" FontSize="80" Width="400"/>
         <Button x:Name="S_quit" Content="X" Margin="485,30,483.333,0" VerticalAlignment="Top" FontFamily="Felix Titling" FontSize="50" Cursor="Hand" Background="#FFFF8E8E" Click="S_quit_Click"/>
 
@@ -28,7 +31,7 @@
             <RadioButton x:Name="S_difficulty_hard_btn" Content="Hard" FontSize="30" FontFamily="Felix Titling" Cursor="Hand" VerticalContentAlignment="Center" Height="50"/>
         </StackPanel>
         <Button x:Name="S_play" Content="Play" HorizontalAlignment="Left" Margin="399,827,0,0" FontFamily="Felix Titling" VerticalAlignment="Top" FontSize="50" Cursor="Hand" Background="#FF9BFF8B" Width="246" Click="S_play_Click"/>
-        <Label x:Name="S_warning_label" Content="Warning Label" Margin="271,772,272.333,0" VerticalAlignment="Top" FontFamily="Felix Titling" FontSize="30" Foreground="#FFFF4747" FontWeight="Bold" HorizontalAlignment="Center" Width="500" HorizontalContentAlignment="Center"/>
+        <Label x:Name="S_warning_label" Content="Warning Label" Margin="271,772,272.333,0" VerticalAlignment="Top" FontFamily="Felix Titling" FontSize="30" Foreground="#FFFF4747" FontWeight="Bold" HorizontalAlignment="Center" Width="500" HorizontalContentAlignment="Center" Visibility="Hidden"/>
 
     </Grid>
 </Window>

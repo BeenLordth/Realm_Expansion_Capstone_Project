@@ -25,7 +25,27 @@ namespace Realm_Expansion_Capstone_Project
         public Bowmen(int XCoor, int YCoor, String owner)
             :base(XCoor, YCoor, owner)
         {
+            XCoordinate = XCoor;
+            YCoordinate = YCoor;
+            Owner = owner;
             AttackRange = 2;
+        }
+
+        /// <summary>
+        /// getter for the Level variable 
+        /// </summary>
+        /// <returns>current level of the bowmen</returns>
+        public int getLevel()
+        {
+            return Level;
+        }
+
+        /// <summary>
+        /// setter for the Level variable 
+        /// </summary>
+        public void setLevel()
+        {
+            Level++;
         }
     }
 }
