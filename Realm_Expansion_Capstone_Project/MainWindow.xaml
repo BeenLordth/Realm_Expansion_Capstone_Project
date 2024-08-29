@@ -5,15 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Realm_Expansion_Capstone_Project"
         mc:Ignorable="d"
-        Title="Main Menu" Height="1050" Width="1050">
+        Title="Main Menu" Height="1050" Width="1050"
+        ResizeMode="NoResize">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="Assets/Images/BackgroundImg.png" Opacity="0.5"/>
         </Grid.Background>
         <Image x:Name="MM_game_title" Height="300" Margin="65,20,52.333,0" VerticalAlignment="Top" Source="Assets/Images/GameTitle.png" Cursor="None"/>
-        <Button x:Name="MM_play_btn" Content="Play" Margin="400,596,397.333,0" VerticalAlignment="Top" FontFamily="Felix Titling" FontSize="50" Background="#FF9BFF8B" Click="MM_play_btn_Click" Cursor="Hand" />
-        <Button x:Name="MM_quit_btn" Content="Quit" Margin="400,752,397.333,0" VerticalAlignment="Top" FontFamily="Felix Titling" FontSize="50" Background="#FFFF8E8E" Click="MM_quit_btn_Click" Cursor="Hand" />
-        <Button x:Name="MM_load_btn" Content="Load" FontFamily="Felix Titling" FontSize="50" Margin="400,675,397.333,0" Background="#FFFFEB8E" VerticalAlignment="Top" Cursor="Hand"/>
+        <Button x:Name="MM_play_btn" Content="Play" Margin="400,596,397.333,0" VerticalAlignment="Top" FontFamily="Felix Titling" FontSize="50" Background="#FFC87967" Click="MM_play_btn_Click" Cursor="Hand" />
+        <Button x:Name="MM_quit_btn" Content="Quit" Margin="400,830,397.333,0" VerticalAlignment="Top" FontFamily="Felix Titling" FontSize="50" Background="#FFC87967" Click="MM_quit_btn_Click" Cursor="Hand" />
+        <Button x:Name="MM_load_btn" Content="Load" FontFamily="Felix Titling" FontSize="50" Margin="400,675,397.333,0" Background="#FFC87967" VerticalAlignment="Top" Cursor="Hand"/>
         <Label x:Name="MM_title" Content="Main Menu" Margin="260,403,257.333,0" VerticalAlignment="Top" FontFamily="Felix Titling" FontSize="80"/>
+        <Button Content="Tutorial" HorizontalAlignment="Left" Margin="395,752,0,0" FontFamily="Felix Titling" FontSize="50" Background="#FFC87967" VerticalAlignment="Top"/>
     </Grid>
 </Window>

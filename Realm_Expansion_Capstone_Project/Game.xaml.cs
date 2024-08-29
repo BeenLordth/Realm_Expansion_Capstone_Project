@@ -20,6 +20,7 @@ namespace Realm_Expansion_Capstone_Project
     public partial class Game : Window
     {
         private Block[] Blocks = new Block[900];
+        private List<Block> Cities = new List<Block>();
 
         public Game()
         {
@@ -72,52 +73,45 @@ namespace Realm_Expansion_Capstone_Project
                 button.Height = 30;
                 button.BorderThickness = new Thickness(0);
                 Image terrainImg = new Image();
+                Block block;
 
                 if (TerrainCharArray[i] == 'M')
                 {
-                    Block block = new Block("Mountain", "NA", false);
-                    xcoord = updateXCoordSetUp(xcoord, ycoord);
-                    ycoord = updateYcoordSetUp(xcoord, ycoord);
-                    block.setXCoordinate(xcoord);
-                    block.setYCoordinate(ycoord);
-                    Blocks[i] = block;
-                    button.Name = "_" + block.getXCoordinate().ToString() + "_" + block.getYCoordinate().ToString(); // test
+                    block = new Block("Mountain", "NA", false);
                     terrainImg.Source = new BitmapImage(new Uri("Assets/Images/mountain.jpg", UriKind.Relative));
-                } else if (TerrainCharArray[i] == 'G')
+                } 
+                else if (TerrainCharArray[i] == 'G')
                 {
-                    Block block = new Block("Grassland", "NA", true);
-                    xcoord = updateXCoordSetUp(xcoord, ycoord);
-                    ycoord = updateYcoordSetUp(xcoord, ycoord);
-                    block.setXCoordinate(xcoord);
-                    block.setYCoordinate(ycoord);
-                    Blocks[i] = block;
-                    button.Name = "_" + block.getXCoordinate().ToString() + "_" + block.getYCoordinate().ToString(); // test
+                    block = new Block("Grassland", "NA", true);
                     terrainImg.Source = new BitmapImage(new Uri("Assets/Images/grassland.jpg", UriKind.Relative));
 
-                } else if (TerrainCharArray[i] == 'W')
+                } 
+                else if (TerrainCharArray[i] == 'W')
                 {
-                    Block block = new Block("Water", "NA", false);
-                    xcoord = updateXCoordSetUp(xcoord, ycoord);
-                    ycoord = updateYcoordSetUp(xcoord, ycoord);
-                    block.setXCoordinate(xcoord);
-                    block.setYCoordinate(ycoord);
-                    Blocks[i] = block;
-                    button.Name = "_" + block.getXCoordinate().ToString() + "_" + block.getYCoordinate().ToString(); // test
+                    block = new Block("Water", "NA", false);
                     terrainImg.Source = new BitmapImage(new Uri("Assets/Images/water.jpg", UriKind.Relative));
 
-                } else
+                } 
+                else
                 {
-                    Block block = new Block("City", "NA", false);
-                    xcoord = updateXCoordSetUp(xcoord, ycoord);
-                    ycoord = updateYcoordSetUp(xcoord, ycoord);
-                    block.setXCoordinate(xcoord);
-                    block.setYCoordinate(ycoord);
-                    Blocks[i] = block;
-                    button.Name = "_" + block.getXCoordinate().ToString() + "_" + block.getYCoordinate().ToString(); // test
+                    block = new Block("City", "NA", false);
                     terrainImg.Source = new BitmapImage(new Uri("Assets/Images/city.jpg", UriKind.Relative));
-                }   
+                }
 
+                xcoord = updateXCoordSetUp(xcoord, ycoord);
+                ycoord = updateYcoordSetUp(xcoord, ycoord);
+                block.setXCoordinate(xcoord);
+                block.setYCoordinate(ycoord);
+                Blocks[i] = block;
+
+                if(block.getTerrain() == "City")
+                {
+                    Cities.Add(block);
+                }
+
+                button.Name = "_" + block.getXCoordinate().ToString() + "_" + block.getYCoordinate().ToString(); // test
                 button.Content = terrainImg;
+                button.Tag = block;
                 button.Click += testClick;
                 G_game_board_stack_panel.Children.Add(button);
             }
@@ -147,7 +141,18 @@ namespace Realm_Expansion_Capstone_Project
         private void testClick(object sender, RoutedEventArgs e)
         {
             Button clickedButton = sender as Button;
-            MessageBox.Show($"{clickedButton.Name} was clicked");
+
+            if(clickedButton != null)
+            {
+                Block clickedBlock = clickedButton.Tag as Block;
+                if(clickedButton != null)
+                {
+                    G_coordinate_display_label.Content = $"{clickedBlock.getXCoordinate()}, {clickedBlock.getYCoordinate()}";
+                    G_owner_display_label.Content = $"{clickedBlock.getOwner()}\n";
+                    G_walkable_display_label.Content = $"{clickedBlock.getIsWalkable()}";
+                    G_terrain_display_label.Content = $"{clickedBlock.getTerrain()}\n";
+                }
+            }
         }
     }
 }

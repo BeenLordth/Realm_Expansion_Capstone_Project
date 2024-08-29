@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Realm_Expansion_Capstone_Project"
         mc:Ignorable="d"
-        Title="Settings" Height="1050" Width="1050">
+        Title="Settings" Height="1050" Width="1050"
+        ResizeMode="NoResize">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="Assets/Images/BackgroundImg.png" Opacity="0.5"/>
@@ -30,7 +31,7 @@
             <RadioButton x:Name="S_difficulty_easy_btn" Content="Easy" FontSize="30" IsChecked="True" FontFamily="Felix Titling" Cursor="Hand" VerticalContentAlignment="Center" Height="50"/>
             <RadioButton x:Name="S_difficulty_hard_btn" Content="Hard" FontSize="30" FontFamily="Felix Titling" Cursor="Hand" VerticalContentAlignment="Center" Height="50"/>
         </StackPanel>
-        <Button x:Name="S_play" Content="Play" HorizontalAlignment="Left" Margin="399,827,0,0" FontFamily="Felix Titling" VerticalAlignment="Top" FontSize="50" Cursor="Hand" Background="#FF9BFF8B" Width="246" Click="S_play_Click"/>
+        <Button x:Name="S_play" Content="Play" HorizontalAlignment="Left" Margin="399,827,0,0" FontFamily="Felix Titling" VerticalAlignment="Top" FontSize="50" Cursor="Hand" Background="#FFC87967" Width="246" Click="S_play_Click"/>
         <Label x:Name="S_warning_label" Content="Warning Label" Margin="271,772,272.333,0" VerticalAlignment="Top" FontFamily="Felix Titling" FontSize="30" Foreground="#FFFF4747" FontWeight="Bold" HorizontalAlignment="Center" Width="500" HorizontalContentAlignment="Center" Visibility="Hidden"/>
 
     </Grid>
