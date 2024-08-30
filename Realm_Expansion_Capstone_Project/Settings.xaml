@@ -12,7 +12,7 @@
             <ImageBrush ImageSource="Assets/Images/BackgroundImg.png" Opacity="0.5"/>
         </Grid.Background>
         <Label x:Name="S_title" Content="Settings" Margin="321,99,322.333,0" VerticalAlignment="Top" FontFamily="Felix Titling" FontSize="80" Width="400"/>
-        <Button x:Name="S_quit" Content="X" Margin="485,30,483.333,0" VerticalAlignment="Top" FontFamily="Felix Titling" FontSize="50" Cursor="Hand" Background="#FFFF8E8E" Click="S_quit_Click"/>
+        <Button x:Name="S_quit" Content="X" Margin="31,30,937.667,0" VerticalAlignment="Top" FontFamily="Felix Titling" FontSize="50" Cursor="Hand" Background="#FFFF8E8E" Click="S_quit_Click"/>
 
         <StackPanel x:Name="S_name_panel" HorizontalAlignment="Left" Height="auto" Margin="370,246,0,0" VerticalAlignment="Top" Width="auto">
             <Label x:Name="S_name_label" Content="Name" FontSize="40" HorizontalAlignment="Center" FontFamily="Felix Titling"/>

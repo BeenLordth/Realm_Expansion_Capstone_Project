@@ -35,7 +35,7 @@ namespace Realm_Expansion_Capstone_Project
             if (isValidName(input))
             {
                 this.Close();
-                Game game = new Game();
+                Game game = new Game(input, getEnemyCount(), getSelectedDifficulty());
                 game.ShowDialog();
             }
         }
@@ -72,6 +72,33 @@ namespace Realm_Expansion_Capstone_Project
             }
 
             return true;
+        }
+
+        private int getEnemyCount()
+        {
+            if (S_enemies_one_btn.IsChecked == true)
+            {
+                return 1;
+            }
+            else if (S_enemies_two_btn.IsChecked == true)
+            {
+                return 2;
+            }
+            else
+            {
+                return 3;
+            }
+        }
+
+        private String getSelectedDifficulty()
+        {
+            if (S_difficulty_easy_btn.IsChecked == true)
+            {
+                return "Easy";
+            } else
+            {
+                return "Hard";
+            }
         }
     }
 }

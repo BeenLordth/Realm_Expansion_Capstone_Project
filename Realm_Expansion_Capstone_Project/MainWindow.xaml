@@ -16,6 +16,6 @@
         <Button x:Name="MM_quit_btn" Content="Quit" Margin="400,830,397.333,0" VerticalAlignment="Top" FontFamily="Felix Titling" FontSize="50" Background="#FFC87967" Click="MM_quit_btn_Click" Cursor="Hand" />
         <Button x:Name="MM_load_btn" Content="Load" FontFamily="Felix Titling" FontSize="50" Margin="400,675,397.333,0" Background="#FFC87967" VerticalAlignment="Top" Cursor="Hand"/>
         <Label x:Name="MM_title" Content="Main Menu" Margin="260,403,257.333,0" VerticalAlignment="Top" FontFamily="Felix Titling" FontSize="80"/>
-        <Button Content="Tutorial" HorizontalAlignment="Left" Margin="395,752,0,0" FontFamily="Felix Titling" FontSize="50" Background="#FFC87967" VerticalAlignment="Top"/>
+        <Button Content="Tutorial" HorizontalAlignment="Left" Margin="395,752,0,0" FontFamily="Felix Titling" FontSize="50" Background="#FFC87967" VerticalAlignment="Top"  Cursor="Hand"/>
     </Grid>
 </Window>

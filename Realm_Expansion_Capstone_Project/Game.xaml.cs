@@ -19,13 +19,19 @@ namespace Realm_Expansion_Capstone_Project
     /// </summary>
     public partial class Game : Window
     {
+        private Button[] Buttons = new Button[900];
         private Block[] Blocks = new Block[900];
-        private List<Block> Cities = new List<Block>();
+        private List<Block> BlockCities = new List<Block>();
+        private List<City> CityCities = new List<City>();
 
-        public Game()
+        public Game(String name, int enemyCt, string difficulty)
         {
             InitializeComponent();
             SetUpGameBoard();
+            createBase(name, Colors.Blue);
+            if (enemyCt >= 1){createBase("Frey", Colors.Red);}
+            if (enemyCt >= 2){createBase("Lannister", Colors.Orange);} 
+            if (enemyCt >= 3){createBase("Bolton", Colors.Purple);}   
         }
 
         private void SetUpGameBoard()
@@ -106,13 +112,14 @@ namespace Realm_Expansion_Capstone_Project
 
                 if(block.getTerrain() == "City")
                 {
-                    Cities.Add(block);
+                    BlockCities.Add(block);
                 }
 
                 button.Name = "_" + block.getXCoordinate().ToString() + "_" + block.getYCoordinate().ToString(); // test
                 button.Content = terrainImg;
                 button.Tag = block;
-                button.Click += testClick;
+                button.Click += BlockClick;
+                Buttons[i] = button;
                 G_game_board_stack_panel.Children.Add(button);
             }
         }
@@ -138,7 +145,46 @@ namespace Realm_Expansion_Capstone_Project
             return y;
         }
 
-        private void testClick(object sender, RoutedEventArgs e)
+        private void createBase(String owner, Color color)
+        {
+            Random random = new Random();
+            int randomNumber = random.Next(BlockCities.Count);
+            Block selectedCity = BlockCities[randomNumber];
+            BlockCities.RemoveAt(randomNumber);
+
+            City city = new City(selectedCity.getXCoordinate(), selectedCity.getYCoordinate(), owner);
+            CityCities.Add(city);
+
+            // change image
+            Image terrainImg = new Image();
+            terrainImg.Source = new BitmapImage(new Uri("Assets/Images/city.jpg", UriKind.Relative));
+            terrainImg.OpacityMask = new ImageBrush
+            {
+                ImageSource = new BitmapImage(new Uri("pack://application:,,,/Assets/Images/city.jpg", UriKind.RelativeOrAbsolute)),
+                Opacity = 0.5
+            };
+            terrainImg.Effect = new System.Windows.Media.Effects.DropShadowEffect
+            {
+                Color = color,
+                Opacity = 100,
+                ShadowDepth = 0,
+                BlurRadius = 0
+            };
+
+            // change the owner on text display
+            for (int i = 0; i < Blocks.Length; i++)
+            {
+                if (Blocks[i].getXCoordinate() == city.getXCoordinate() && Blocks[i].getYCoordinate() == city.getYCoordinate())
+                {
+                    Blocks[i].setOwner(owner);
+                    Buttons[i].Content = terrainImg;
+                }
+            }
+
+            
+        }
+
+        private void BlockClick(object sender, RoutedEventArgs e)
         {
             Button clickedButton = sender as Button;
 
@@ -154,5 +200,45 @@ namespace Realm_Expansion_Capstone_Project
                 }
             }
         }
+
+        private void G_end_turn_button_Click(object sender, RoutedEventArgs e)
+        {
+            // update turn number
+            string turnLabelText = G_turn_number_label.Content.ToString();
+            int turnNumber = int.Parse(turnLabelText) + 1;
+            G_turn_number_label.Content = turnNumber.ToString();
+        }
+
+        private void G_attack_button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void G_move_button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void G_buy_watchtower_button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void G_buy_villager_button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void G_quit_button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void G_save_button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        
     }
 }
