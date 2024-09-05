@@ -22,16 +22,62 @@ namespace Realm_Expansion_Capstone_Project
         private Button[] Buttons = new Button[900];
         private Block[] Blocks = new Block[900];
         private List<Block> BlockCities = new List<Block>();
-        private List<City> CityCities = new List<City>();
+        private List<City> OccupiedCities = new List<City>();
+        private String PlayerName;  
+        private Boolean isHard;
 
         public Game(String name, int enemyCt, string difficulty)
         {
             InitializeComponent();
             SetUpGameBoard();
             createBase(name, Colors.Blue);
-            if (enemyCt >= 1){createBase("Frey", Colors.Red);}
-            if (enemyCt >= 2){createBase("Lannister", Colors.Orange);} 
-            if (enemyCt >= 3){createBase("Bolton", Colors.Purple);}   
+            createEnemies(enemyCt);
+            PlayerName = name;
+            if(difficulty == "Easy") { isHard = false; }
+            else { isHard = true; }
+            giveBeginnerLand();
+        }
+
+        private void giveBeginnerLand()
+        {
+            foreach (City city in OccupiedCities)
+            {
+                int cityX = city.getXCoordinate();
+                int cityY = city.getYCoordinate();
+
+                for(int x = -1; x <= 1; x++)
+                {
+                    for(int y = -1; y <= 1; y++)
+                    {
+                        if (x != 0 && y != 0)
+                        {
+                            Block block = findBlock(cityX + x, cityY + y);
+
+                            for(int i = 0; i < Blocks.Length; i++)
+                            {
+                                if (Blocks[i].getXCoordinate() == block.getXCoordinate() && Blocks[i].getYCoordinate() == block.getYCoordinate())
+                                {
+                                    Blocks[i].setOwner(city.getOwner());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private Block findBlock(int x, int y)
+        {
+            Block block = null;
+            foreach(Block b in Blocks)
+            {
+                if (b.getXCoordinate() == x && b.getYCoordinate() == y)
+                {
+                    block = b;
+                    break;
+                }
+            }
+            return block;
         }
 
         private void SetUpGameBoard()
@@ -65,8 +111,8 @@ namespace Realm_Expansion_Capstone_Project
             "GGGGGGGGGGGWWWGGGGGGWWWWWGGGGG" + // Row 26
             "GGGGGGGGGGGWWWGGGGGGGWWWWGGGGG" + // Row 27
             "GGGGGGGGGGGWWWWGGGGGGGGGGGGGGG" + // Row 28
-            "GGGGGCGGGGGGWWWGGGGGGGGGGGGGGG" + // Row 29
-            "GGGGGGGGGGGGWWWWGGGGGCGGGGGGGG";  // Row 30
+            "GGGGGCGGGGGGWWWGGGGGGCGGGGGGGG" + // Row 29
+            "GGGGGGGGGGGGWWWWGGGGGGGGGGGGGG";  // Row 30
 
             Char[] TerrainCharArray = Terrain.ToCharArray();
             int xcoord = -1;
@@ -124,24 +170,36 @@ namespace Realm_Expansion_Capstone_Project
             }
         }
 
+        public void createEnemies(int enemyCt)
+        {
+            List<Color> enemyColors = new List<Color> { Colors.Red, Colors.Orange, Colors.Purple };
+            List<String> Names = new List<String> { "Reach", "Dorne", "Crownlands", "Stormlands", "Ironlands", "Vale", "Riverlands", "Dothrak", "YiTi", "Nhai" };
+
+            Random randomName = new Random();
+            Random randomColor = new Random();
+
+            for (int i = 0; i < enemyCt; i++)
+            {
+                int selectedNameIndex = randomName.Next(Names.Count);
+                int selectedColorIndex = randomColor.Next(enemyColors.Count);
+                String name = Names[selectedNameIndex];
+                Names.Remove(name);
+                Color color = enemyColors[selectedColorIndex];
+                enemyColors.Remove(color);
+                createBase(name, color);
+            }
+        }
+
         private int updateXCoordSetUp(int x, int y)
         {
-            if(x < 29)
-            {
-                x++;
-            } else
-            {
-                x = 0;
-            }
+            if(x < 29) { x++; } 
+            else { x = 0; }
             return x;
         }
 
         private int updateYcoordSetUp(int x , int y)
         {
-            if (x == 0)
-            {
-                y++;
-            }
+            if (x == 0) { y++; }
             return y;
         }
 
@@ -153,7 +211,7 @@ namespace Realm_Expansion_Capstone_Project
             BlockCities.RemoveAt(randomNumber);
 
             City city = new City(selectedCity.getXCoordinate(), selectedCity.getYCoordinate(), owner);
-            CityCities.Add(city);
+            OccupiedCities.Add(city);
 
             // change image
             Image terrainImg = new Image();
@@ -171,7 +229,7 @@ namespace Realm_Expansion_Capstone_Project
                 BlurRadius = 0
             };
 
-            // change the owner on text display
+            // change the owner on text display and the game board
             for (int i = 0; i < Blocks.Length; i++)
             {
                 if (Blocks[i].getXCoordinate() == city.getXCoordinate() && Blocks[i].getYCoordinate() == city.getYCoordinate())
@@ -180,8 +238,6 @@ namespace Realm_Expansion_Capstone_Project
                     Buttons[i].Content = terrainImg;
                 }
             }
-
-            
         }
 
         private void BlockClick(object sender, RoutedEventArgs e)
@@ -201,12 +257,30 @@ namespace Realm_Expansion_Capstone_Project
             }
         }
 
+        private int calculateGoldIncome()
+        {
+            int gold = 0;
+            foreach(Block block in Blocks)
+            {
+                if (block.getOwner() == PlayerName)
+                {
+                    gold =+ 100;
+                }
+            }
+            return gold;
+        }
+
         private void G_end_turn_button_Click(object sender, RoutedEventArgs e)
         {
             // update turn number
             string turnLabelText = G_turn_number_label.Content.ToString();
             int turnNumber = int.Parse(turnLabelText) + 1;
             G_turn_number_label.Content = turnNumber.ToString();
+
+            //update gold amount 
+            string goldLabelText = G_gold_number_label.Content.ToString();
+            int newGold = int.Parse(goldLabelText) + calculateGoldIncome();
+            G_gold_number_label.Content = newGold.ToString();
         }
 
         private void G_attack_button_Click(object sender, RoutedEventArgs e)

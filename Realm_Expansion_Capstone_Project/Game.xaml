@@ -13,8 +13,8 @@
         <Button x:Name="G_end_turn_button" Content="End Turn" HorizontalAlignment="Left" Margin="910,945,0,0" VerticalAlignment="Top" FontFamily="Felix Titling" FontSize="20" Width="128" Height="40" Background="#FFF59782"  Cursor="Hand" Click="G_end_turn_button_Click"/>
         
         <StackPanel HorizontalAlignment="Left" Height="100" Margin="915,11,0,0" VerticalAlignment="Top" Width="123" >
-            <Label Content="Gold:" FontSize="25" FontFamily="Felix Titling" HorizontalAlignment="Center"/>
-            <Label Content="0" FontSize="25" FontFamily="Felix Titling" HorizontalAlignment="Center"/>
+            <Label x:Name="G_gold_title_label" Content="Gold:" FontSize="25" FontFamily="Felix Titling" HorizontalAlignment="Center"/>
+            <Label x:Name="G_gold_number_label" Content="100" FontSize="25" FontFamily="Felix Titling" HorizontalAlignment="Center"/>
         </StackPanel>
         
         <StackPanel HorizontalAlignment="Left" Height="310" Margin="910,111,0,0" VerticalAlignment="Top" Width="128">
