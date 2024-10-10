@@ -9,7 +9,7 @@ namespace Realm_Expansion_Capstone_Project
     /// <summary>
     /// Represent a player and holds all of their stats
     /// </summary>
-    public class Player
+    public class Player : Realm
     {
         /// <summary>
         /// Keeps track of how many times the player has lost a match 

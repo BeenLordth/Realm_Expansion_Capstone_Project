@@ -14,22 +14,29 @@
         
         <StackPanel HorizontalAlignment="Left" Height="100" Margin="915,11,0,0" VerticalAlignment="Top" Width="123" >
             <Label x:Name="G_gold_title_label" Content="Gold:" FontSize="25" FontFamily="Felix Titling" HorizontalAlignment="Center"/>
-            <Label x:Name="G_gold_number_label" Content="100" FontSize="25" FontFamily="Felix Titling" HorizontalAlignment="Center"/>
+            <Label x:Name="G_gold_number_label" Content="1000" FontSize="25" FontFamily="Felix Titling" HorizontalAlignment="Center"/>
         </StackPanel>
         
         <StackPanel HorizontalAlignment="Left" Height="310" Margin="910,111,0,0" VerticalAlignment="Top" Width="128">
             <Border Height="20" Background="Transparent"/>
             <Button x:Name="G_buy_villager_button" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="15" FontFamily="Felix Titling" Width="128" Height="49" Background="#FFFFE282" Cursor="Hand" Click="G_buy_villager_button_Click">
-                <TextBlock Text="Buy Villager Unit" TextWrapping="Wrap" TextAlignment="Center"/>
+                <TextBlock x:Name="G_buy_villager_text" Text="Buy Villager Unit" TextWrapping="Wrap" TextAlignment="Center"/>
             </Button>
             <Border Height="20" Background="Transparent"/>
             <Button x:Name="G_buy_watchtower_button" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="15" FontFamily="Felix Titling" Width="128" Height="49" Background="#FFFFE282" Cursor="Hand" Click="G_buy_watchtower_button_Click">
-                <TextBlock TextWrapping="Wrap" Text="Buy Watchtower" TextAlignment="Center"/>
+                <TextBlock x:Name="G_buy_watchtower_text" TextWrapping="Wrap" Text="Buy Watchtower" TextAlignment="Center"/>
             </Button>
             <Border Height="20" Background="Transparent"/>
             <Button x:Name="G_move_button" Content="Move" FontSize="15" FontFamily="Felix Titling" Height="49" Background="#FFFFE282" Cursor="Hand" Click="G_move_button_Click"/>
             <Border Height="20" Background="Transparent"/>
             <Button x:Name="G_attack_button" Content="Attack" FontSize="15" FontFamily="Felix Titling" Height="49" Background="#FFFFE282" Cursor="Hand" Click="G_attack_button_Click"/>
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Left" Height="160" Margin="915, 550,0,0" VerticalAlignment="Top" Width="123">
+            <Label Content="Kills:" FontFamily="Felix Titling" FontSize="25" HorizontalAlignment="Center"/>
+            <Label x:Name="G_kill_count_label" Content="0" FontFamily="Felix Titling" FontSize="25" HorizontalAlignment="Center"/>
+            <Label Content="Deaths:" FontFamily="Felix Titling" FontSize="25" HorizontalAlignment="Center"/>
+            <Label x:Name="G_death_count_label" Content="0" FontFamily="Felix Titling" FontSize="25" HorizontalAlignment="Center"/>
         </StackPanel>
 
         <StackPanel HorizontalAlignment="Left" Height="100" Margin="915,850,0,0" VerticalAlignment="Top" Width="123" >
@@ -43,23 +50,17 @@
                 <Label x:Name="G_coordinate_display_label" Content="N/A" Height="50" FontSize="20" FontFamily="Felix Titling"/>
             </StackPanel>
             <StackPanel Height="50" Orientation="Horizontal">
-                <Label x:Name="G_owner_title_label" Content="Owner:" Height="50" FontSize="20" FontFamily="Felix Titling"/>
+                <Label x:Name="G_owner_title_label" Content="Realm:" Height="50" FontSize="20" FontFamily="Felix Titling"/>
                 <Label x:Name="G_owner_display_label" Content="N/A" Height="50" FontSize="20" FontFamily="Felix Titling"/>
             </StackPanel>
         </StackPanel>
 
-        <StackPanel HorizontalAlignment="Left" Height="100" Margin="300,10,0,0" VerticalAlignment="Top" Width="250">
-            <StackPanel Height="50" Orientation="Horizontal">
+        <StackPanel HorizontalAlignment="Left" Height="40" Margin="325,41,0,0" VerticalAlignment="Top" Width="250">
+            <StackPanel Height="45" Orientation="Horizontal">
                 <Label x:Name="G_terrain_title_label" Content="Terrain:" Height="50" FontSize="20" FontFamily="Felix Titling"/>
                 <Label x:Name="G_terrain_display_label" Content="N/A" Height="50" FontSize="20" FontFamily="Felix Titling"/>
             </StackPanel>
-            <StackPanel Height="50" Orientation="Horizontal">
-                <Label x:Name="G_walkable_title_label" Content="Walkable:" Height="50" FontSize="20" FontFamily="Felix Titling"/>
-                <Label x:Name="G_walkable_display_label" Content="N/A" Height="50" FontSize="20" FontFamily="Felix Titling"/>
-            </StackPanel>
         </StackPanel>
         <Button x:Name="G_quit_button" Content="quit" HorizontalAlignment="Left" Margin="30,30,0,0" VerticalAlignment="Top" Width="100" FontFamily="Felix Titling" FontSize="35" Cursor="Hand" Background="#FFFF8E8E" Click="G_quit_button_Click" />
-        <Button x:Name="G_save_button" Content="Save" HorizontalAlignment="Left" Margin="145,30,0,0" VerticalAlignment="Top" Width="100" FontFamily="Felix Titling" FontSize="35" Cursor="Hand" Background="#FFFF8E8E" Click="G_save_button_Click"/>
-
     </Grid>
 </Window>

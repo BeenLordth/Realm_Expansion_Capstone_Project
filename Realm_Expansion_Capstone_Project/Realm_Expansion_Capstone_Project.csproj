@@ -56,19 +56,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Block.cs" />
-    <Compile Include="Bowmen.cs" />
     <Compile Include="City.cs" />
+    <Compile Include="Enemy.cs" />
     <Compile Include="Game.xaml.cs">
       <DependentUpon>Game.xaml</DependentUpon>
     </Compile>
     <Compile Include="Player.cs" />
-    <Compile Include="Results.xaml.cs">
-      <DependentUpon>Results.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Realm.cs" />
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Swordmen.cs" />
     <Compile Include="Villager.cs" />
     <Compile Include="WatchTower.cs" />
     <Page Include="Game.xaml">
@@ -87,10 +84,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Results.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -136,6 +129,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\BackgroundImg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\unitbase.jpg" />
+    <Resource Include="Assets\Images\unit_villager.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\WatchTower.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Attack_Symbol.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

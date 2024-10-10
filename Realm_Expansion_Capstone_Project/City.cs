@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Realm_Expansion_Capstone_Project
 {
@@ -11,11 +12,6 @@ namespace Realm_Expansion_Capstone_Project
     /// </summary>
     public class City
     {
-        /// <summary>
-        /// Identifies the current level of the city 
-        /// </summary>
-        protected int Level = 1;
-
         /// <summary>
         /// Identifies the X coordinate of the city (horizontal)
         /// </summary>
@@ -44,7 +40,7 @@ namespace Realm_Expansion_Capstone_Project
         /// <summary>
         /// Determinte the current attack damage of the city 
         /// </summary>
-        protected int AttackDamage = 0;
+        protected int AttackDamage = 200;
 
         /// <summary>
         /// Class constructor 
@@ -57,23 +53,6 @@ namespace Realm_Expansion_Capstone_Project
             XCoordinate = XCoor;
             YCoordinate = YCoor;
             Owner = owner;
-        }
-
-        /// <summary>
-        /// getter for the Level variable 
-        /// </summary>
-        /// <returns>current level of the city</returns>
-        public int getLevel()
-        {
-            return Level;
-        }
-
-        /// <summary>
-        /// setter for the Level variable 
-        /// </summary>
-        public void setLevel()
-        {
-            Level++;
         }
 
         /// <summary>
@@ -182,6 +161,21 @@ namespace Realm_Expansion_Capstone_Project
         public void setAttackDamage(int newAttackDamage)
         {
             AttackDamage = newAttackDamage;
+        }
+
+        public static void displayCity(Block city, List<City> cities)
+        {
+            foreach(City citi in cities)
+            {
+                if (citi.getXCoordinate() == city.getXCoordinate() && citi.getYCoordinate() == city.getYCoordinate())
+                {
+                    String msg = "Health: " + citi.getHealth();
+                    msg += "\nAttack Damage: " + citi.getAttackDamage();
+                    msg += "\nAttack Range: " + citi.getAttackRange();
+                    MessageBox.Show(msg, "City Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                    break;
+                }
+            }
         }
     }
 }

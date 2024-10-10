@@ -35,7 +35,7 @@ namespace Realm_Expansion_Capstone_Project
             if (isValidName(input))
             {
                 this.Close();
-                Game game = new Game(input, getEnemyCount(), getSelectedDifficulty());
+                Game game = new Game(input, getEnemyCount());
                 game.ShowDialog();
             }
         }
@@ -87,17 +87,6 @@ namespace Realm_Expansion_Capstone_Project
             else
             {
                 return 3;
-            }
-        }
-
-        private String getSelectedDifficulty()
-        {
-            if (S_difficulty_easy_btn.IsChecked == true)
-            {
-                return "Easy";
-            } else
-            {
-                return "Hard";
             }
         }
     }
