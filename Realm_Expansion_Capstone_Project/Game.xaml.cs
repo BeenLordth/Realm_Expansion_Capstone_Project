@@ -19,16 +19,49 @@ namespace Realm_Expansion_Capstone_Project
     /// </summary>
     public partial class Game : Window
     {
+        /// <summary>
+        /// array of buttons to hold all the buttons displayed on screen
+        /// </summary>
         private Button[] Buttons = new Button[900];
+
+        /// <summary>
+        /// array of blocks to hold all the blocks being represented on screen by buttons
+        /// </summary>
         private Block[] Blocks = new Block[900];
+
+        /// <summary>
+        /// list of cities to hold all cities that are not owned by player or enemies
+        /// </summary>
         private List<City> nonOccupiedCities = new List<City>();
+
+        /// <summary>
+        /// list of cities to hold all cities that are owned by player or enemies
+        /// </summary>
         private List<City> OccupiedCities = new List<City>();
+
+        /// <summary>
+        /// array of enemies to hold all the enemies that will be fighting the player
+        /// </summary>
         private Enemy[] Enemies = new Enemy[3];
+
+        /// <summary>
+        /// player instance to hold all the info
+        /// </summary>
         private Player Player = new Player();
 
+        /// <summary>
+        /// list of villagers to hold all the units currently in the battlefield
+        /// </summary>
         private List<Villager> Villagers = new List<Villager>();
+
+        /// <summary>
+        /// list of watch tower to hold all the towers currently standing in the battlefield
+        /// </summary>
         private List<WatchTower> WatchTowers = new List<WatchTower>();
 
+        /// <summary>
+        /// determines the current function of mouse click on buttons
+        /// </summary>
         private String CurrentBlockClickFunction = "";
 
         /// <summary>
@@ -87,6 +120,7 @@ namespace Realm_Expansion_Capstone_Project
             int xcoord = -1;
             int ycoord = -1;
 
+            //create all the buttons and blocks and fill them with initial values
             for (int i = 0; i < Blocks.Length; i++)
             {
                 Button button = new Button();
@@ -96,6 +130,7 @@ namespace Realm_Expansion_Capstone_Project
                 Image terrainImg = new Image();
                 Block block;
 
+                //give a button a certain look depending on the string map
                 if (TerrainCharArray[i] == 'M')
                 {
                     block = new Block("Mountain", "NA", false);
@@ -155,6 +190,7 @@ namespace Realm_Expansion_Capstone_Project
                 Block clickedBlock = clickedButton.Tag as Block;
                 if(clickedButton != null)
                 {
+                    //display block info in the top of the screen
                     G_coordinate_display_label.Content = $"{clickedBlock.getXCoordinate()}, {clickedBlock.getYCoordinate()}";
                     G_owner_display_label.Content = $"{clickedBlock.getOwner()}\n";
                     G_terrain_display_label.Content = $"{clickedBlock.getTerrain()}\n";
@@ -198,6 +234,11 @@ namespace Realm_Expansion_Capstone_Project
             }
         }
 
+        /// <summary>
+        /// update player and enemy data accordingly. give enemy their turn to move and attack
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">e</param>
         private void G_end_turn_button_Click(object sender, RoutedEventArgs e)
         {
             // update turn number
@@ -210,6 +251,7 @@ namespace Realm_Expansion_Capstone_Project
             int newGold = int.Parse(goldLabelText) + Realm.calculateGoldIncome(Player.getName(), Blocks);
             G_gold_number_label.Content = newGold.ToString();
 
+            //allow villagers and towers to attack again
             foreach(Villager vil in Villagers)
             {
                 if(vil.getOwner() == Player.getName())
@@ -219,8 +261,17 @@ namespace Realm_Expansion_Capstone_Project
                 }
             }
 
+            foreach (WatchTower wt in WatchTowers)
+            {
+                if(wt.getOwner() == Player.getName())
+                {
+                    wt.setCanAttack(true);
+                }
+            }
+
             Random random = new Random();
 
+            // update the gold amount of each enemy and allow them to move and attack
             foreach (Enemy enemy in Enemies)
             {
                 if(enemy != null)
@@ -231,7 +282,7 @@ namespace Realm_Expansion_Capstone_Project
                     {
                         if (city.getOwner() == enemy.getName())
                         {
-
+                            // given a small chance that the enemy will spawn a new villager unit
                             if (random.Next(0, 5) == 0) 
                             {
                                 List<Block> adjacentBlocks = GetAdjacentBlocks(city);
@@ -256,10 +307,15 @@ namespace Realm_Expansion_Capstone_Project
                     }
                 }
             }
-
+            // allow enemy to move and attack
             EnemyAIturn();
         }
 
+        /// <summary>
+        /// get the blocks that surround a city
+        /// </summary>
+        /// <param name="city">city to search around</param>
+        /// <returns></returns>
         private List<Block> GetAdjacentBlocks(City city)
         {
             List<Block> adjacentBlocks = new List<Block>();
@@ -289,6 +345,32 @@ namespace Realm_Expansion_Capstone_Project
             return adjacentBlocks;
         }
 
+        /// <summary>
+        /// get the blcoks that surround a villager
+        /// </summary>
+        /// <param name="villager">villager to search the sides of</param>
+        /// <returns>list of adjaent blocks</returns>
+        private List<Block> GetAdjacentBlocks(Villager villager)
+        {
+            List<Block> adjacentBlocks = new List<Block>();
+            int x = villager.getXCoordinate();
+            int y = villager.getYCoordinate();
+
+            // Check the four adjacent blocks (up, down, left, right)
+            if (x > 0) adjacentBlocks.Add(Block.findBlock(x - 1, y, Blocks)); 
+            if (x < 29) adjacentBlocks.Add(Block.findBlock(x + 1, y, Blocks));
+            if (y > 0) adjacentBlocks.Add(Block.findBlock(x, y - 1, Blocks));  
+            if (y < 29) adjacentBlocks.Add(Block.findBlock(x, y + 1, Blocks)); 
+
+            return adjacentBlocks;
+        }
+
+
+        /// <summary>
+        /// allow player to attack with their units and exit out of attack mode
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">e</param>
         private void G_attack_button_Click(object sender, RoutedEventArgs e)
         {
             if (Player.TotalUnits() != 0 || Player.getTotalWatchTowers() != 0)
@@ -312,6 +394,11 @@ namespace Realm_Expansion_Capstone_Project
             }
         }
 
+        /// <summary>
+        /// allow player to move their units and exit out of move mode
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void G_move_button_Click(object sender, RoutedEventArgs e)
         {
             if (Player.TotalUnits() != 0)
@@ -335,6 +422,11 @@ namespace Realm_Expansion_Capstone_Project
             }
         }
 
+        /// <summary>
+        /// allow player to go into purchase mode for watch towers and also exit this mode
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void G_buy_watchtower_button_Click(object sender, RoutedEventArgs e)
         {
             if (G_buy_watchtower_text.Text == "Buy Watchtower")
@@ -351,6 +443,11 @@ namespace Realm_Expansion_Capstone_Project
             }
         }
 
+        /// <summary>
+        /// allow player to go into purchase mode for villagers and also exit this mode
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void G_buy_villager_button_Click(object sender, RoutedEventArgs e)
         {
             if (G_buy_villager_text.Text == "Buy Villager Unit")
@@ -367,6 +464,14 @@ namespace Realm_Expansion_Capstone_Project
             }
         }
 
+        /// <summary>
+        /// change the availability of buttons to the opposite of what they currently are at. 
+        /// </summary>
+        /// <param name="btn1">button</param>
+        /// <param name="btn2">button</param>
+        /// <param name="btn3">button</param>
+        /// <param name="btn4">button</param>
+        /// <param name="btn5">button</param>
         private void flipButtonAvailability(Button btn1, Button btn2, Button btn3, Button btn4, Button btn5)
         {
             if (btn1.IsEnabled)
@@ -386,6 +491,11 @@ namespace Realm_Expansion_Capstone_Project
             }
         }
 
+        /// <summary>
+        /// allow player to quick back to the main menu with a warning
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void G_quit_button_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show(
@@ -400,6 +510,11 @@ namespace Realm_Expansion_Capstone_Project
             }
         }
 
+        /// <summary>
+        /// allow player to pick a place to place a watch tower 
+        /// </summary>
+        /// <param name="button">button where the tower will be placed</param>
+        /// <param name="block">block where the tower will be placed</param>
         private void placeWatchTower(Button button, Block block)
         {
             int gold = int.Parse(G_gold_number_label.Content.ToString());
@@ -408,7 +523,6 @@ namespace Realm_Expansion_Capstone_Project
                 "Place Watchtower",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Question);
-
 
             if (result == MessageBoxResult.Yes)
             {
@@ -433,6 +547,11 @@ namespace Realm_Expansion_Capstone_Project
             }
         }
 
+        /// <summary>
+        /// allow player to pick a place to place a villager unit
+        /// </summary>
+        /// <param name="button">button where villager will be placed</param>
+        /// <param name="block">block where villager will be placed</param>
         private void placeVillager(Button button, Block block)
         {
             int gold = int.Parse(G_gold_number_label.Content.ToString());
@@ -467,8 +586,20 @@ namespace Realm_Expansion_Capstone_Project
             }
         }
 
+        /// <summary>
+        /// list of spots that the player can place unit in
+        /// </summary>
         List<Block> availableSpots = new List<Block>();
+
+        /// <summary>
+        /// villager that is being moved
+        /// </summary>
         Villager movingVillager = null;
+
+        /// <summary>
+        /// pick a place to move the unit to
+        /// </summary>
+        /// <param name="block">original place of villager</param>
         private void MoveUnit(Block block)
         {
             availableSpots.Clear();
@@ -513,6 +644,10 @@ namespace Realm_Expansion_Capstone_Project
             }
         }
 
+        /// <summary>
+        /// verify that the new block is available before moving unit here
+        /// </summary>
+        /// <param name="block">new block to move to</param>
         private void moveConfirmation(Block block)
         {
             Block confirmedBlock = null;
@@ -540,9 +675,25 @@ namespace Realm_Expansion_Capstone_Project
             }
         }
 
+        /// <summary>
+        /// list of blocks that can be attacked
+        /// </summary>
         List<Block> attackableBlocks = new List<Block>();
+
+        /// <summary>
+        /// villager that will be used to attack
+        /// </summary>
         Villager attackingVillager = null;
+
+        /// <summary>
+        /// watch tower that will be used to attack 
+        /// </summary>
         WatchTower attackingWatchtower = null;
+
+        /// <summary>
+        /// select the unit that will be used to attack 
+        /// </summary>
+        /// <param name="block"></param>
         private void selectAttackUnit(Block block)
         {
             availableSpots.Clear();
@@ -553,6 +704,7 @@ namespace Realm_Expansion_Capstone_Project
             attackingWatchtower = WatchTower.findWatchTowerInBlocks(block, WatchTowers);
             int unitX = block.getXCoordinate();
             int unitY = block.getYCoordinate();
+            // path if the unit is a villager
             if (attackingVillager != null && attackingWatchtower == null)
             {
                 if (attackingVillager.getCanAttack() == true)
@@ -591,6 +743,7 @@ namespace Realm_Expansion_Capstone_Project
                     MessageBox.Show("You already attacked with this unit", "Attack Limit", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             } 
+            //path if the unit is a watch tower
             else if (attackingVillager == null && attackingWatchtower != null)
             {
                 if (attackingWatchtower.getCanAttack() == true)
@@ -631,8 +784,13 @@ namespace Realm_Expansion_Capstone_Project
             }
         }
 
+        /// <summary>
+        /// select the block that player wants to attack
+        /// </summary>
+        /// <param name="block"></param>
         private void selectAttackTarget(Block block)
         {
+            //path if attack unit is villager
             if (attackingVillager != null && attackingWatchtower == null)
             {
                 if (attackingVillager.getXCoordinate() == block.getXCoordinate() && attackingVillager.getYCoordinate() == block.getYCoordinate())
@@ -669,6 +827,7 @@ namespace Realm_Expansion_Capstone_Project
                     }
                 }
             }
+            //path if attacking unit is a watch tower
             else if (attackingVillager == null && attackingWatchtower != null)
             {
                 if (attackingWatchtower.getXCoordinate() == block.getXCoordinate() && attackingWatchtower.getYCoordinate() == block.getYCoordinate())
@@ -709,6 +868,10 @@ namespace Realm_Expansion_Capstone_Project
             checkWin();
         }
 
+        /// <summary>
+        /// allow player to view information about a city or unit
+        /// </summary>
+        /// <param name="block"></param>
         private void inspectBlock(Block block)
         {
             foreach (Block space in Blocks)
@@ -746,12 +909,18 @@ namespace Realm_Expansion_Capstone_Project
             }
         }
 
+        /// <summary>
+        /// update screen with values of kills and deaths from the player class
+        /// </summary>
         public void updateKD()
         {
             G_death_count_label.Content = Player.getTotalDeaths().ToString();
             G_kill_count_label.Content = Player.getTotalKills().ToString();
         }
 
+        /// <summary>
+        /// check if the player or enemy has won
+        /// </summary>
         public void checkWin()
         {
             int playerCities = 0;
@@ -771,7 +940,6 @@ namespace Realm_Expansion_Capstone_Project
             String msg = "The war is over now!";
             msg += "\nTotal kills: " + Player.getTotalKills();
             msg += "\nTotal Deaths: " + Player.getTotalDeaths();
-            msg += "\nActive Armies: " + Player.getTotalVillagers();
 
             if (enemyCities == 0)
             {
@@ -787,6 +955,9 @@ namespace Realm_Expansion_Capstone_Project
             }
         }
 
+        /// <summary>
+        /// allow enemy to move and attack 
+        /// </summary>
         private void EnemyAIturn()
         {
             Random random = new Random();
@@ -795,6 +966,7 @@ namespace Realm_Expansion_Capstone_Project
             {
                 if (enemy != null)
                 {
+                    //allow enemy to move all of their villagers and claim cities if they can
                     foreach (Villager enemyVillager in Villagers)
                     {
                         if (enemy.getName() == enemyVillager.getOwner())
@@ -806,16 +978,23 @@ namespace Realm_Expansion_Capstone_Project
                                 // Randomly select one of the available spots
                                 Block targetBlock = availableSpots[random.Next(availableSpots.Count)];
 
-                                MoveEnemyVillager(enemyVillager, targetBlock);
+                                MoveEnemyVillager(enemyVillager, targetBlock); 
 
                                 Villager.ClaimCity(targetBlock, OccupiedCities, nonOccupiedCities, Blocks, Buttons, Enemies, Player);
                             }
                         }
                     }
+                    enemyAttack(); // allow enemy to attack
+
                 }
             }
         }
 
+        /// <summary>
+        /// returns spots that the enemy can move their units to.
+        /// </summary>
+        /// <param name="enemyVillager">enemy that wants to be moved</param>
+        /// <returns></returns>
         private List<Block> GetAvailableSpotsForEnemy(Villager enemyVillager)
         {
             List<Block> availableSpots = new List<Block>();
@@ -848,6 +1027,11 @@ namespace Realm_Expansion_Capstone_Project
             return availableSpots;
         }
 
+        /// <summary>
+        /// confirm the move of a enemy unit from 1 place to another
+        /// </summary>
+        /// <param name="enemyVillager">moving unit</param>
+        /// <param name="targetBlock">target block</param>
         private void MoveEnemyVillager(Villager enemyVillager, Block targetBlock)
         {
 
@@ -859,6 +1043,167 @@ namespace Realm_Expansion_Capstone_Project
             enemyVillager.setYCoordinate(targetBlock.getYCoordinate());
 
             Block.updateBlockAppearance(targetBlock, enemyVillager.getOwner(), "Unit_Villager", Buttons, Blocks, Enemies, Player);
+        }
+
+        /// <summary>
+        /// allow enemy to attack nearby cities or player units
+        /// </summary>
+        public void enemyAttack()
+        {
+            List<Villager> villagersToRemove = new List<Villager>();  
+            List<Villager> enemyVillagersToRemove = new List<Villager>();  
+
+            foreach (Enemy enemy in Enemies)
+            {
+                foreach (Villager enemyVillager in Villagers.ToList()) 
+                {
+                    if (enemy.getName() == enemyVillager.getOwner())
+                    {
+                        List<Block> adjacentBlocks = GetAdjacentBlocks(enemyVillager);
+
+                        Boolean hasAttacked = false;
+
+                        foreach (Block targetBlock in adjacentBlocks)
+                        {
+                            if (hasAttacked)
+                            {
+                                break; // Exit if the unit has already attacked
+                            }
+                            // If the block is owned by the player, perform an attack
+                            if (targetBlock.getOwner() == Player.getName())
+                            {
+                                attackPlayer(enemyVillager, targetBlock, Villagers, OccupiedCities, WatchTowers, Player, Blocks, Buttons, Enemies);
+
+                                // If the enemy or player die, add them to list to remove later
+                                if (enemyVillager.getHealth() <= 0)
+                                {
+                                    enemyVillagersToRemove.Add(enemyVillager);
+                                }
+
+                                Villager targetVillager = Villager.findVillagerInBlocks(targetBlock, Villagers);
+                                if (targetVillager != null && targetVillager.getHealth() <= 0)
+                                {
+                                    villagersToRemove.Add(targetVillager);
+                                }
+
+                                hasAttacked = true;
+                                updateKD();
+                                checkWin();
+                                break; 
+                            }
+                        }
+                        if (hasAttacked) break;
+                    }
+                }
+            }
+
+            // Remove all villagers that died
+            foreach (Villager vilToRemove in villagersToRemove)
+            {
+                Villagers.Remove(vilToRemove);
+            }
+
+            foreach (Villager enemyVilToRemove in enemyVillagersToRemove)
+            {
+                Villagers.Remove(enemyVilToRemove);
+            }
+        }
+
+        /// <summary>
+        /// logic to attack player units and cities
+        /// </summary>
+        /// <param name="attacker"></param>
+        /// <param name="targetBlock"></param>
+        /// <param name="villagers"></param>
+        /// <param name="cities"></param>
+        /// <param name="watchtowers"></param>
+        /// <param name="player"></param>
+        /// <param name="blocks"></param>
+        /// <param name="buttons"></param>
+        /// <param name="enemies"></param>
+        public static void attackPlayer(Villager attacker, Block targetBlock, List<Villager> villagers, List<City> cities, List<WatchTower> watchtowers, Player player, Block[] blocks, Button[] buttons, Enemy[] enemies)
+        {
+            Villager vilToRemove = null;
+
+            // find the villager that will be attacked
+            foreach (Villager playerVillager in villagers)
+            {
+                if (Villager.findVillagerInBlocks(targetBlock, villagers) != null && targetBlock.getXCoordinate() == playerVillager.getXCoordinate() && targetBlock.getYCoordinate() == playerVillager.getYCoordinate())
+                {
+                    int damageToPlayer = attacker.getAttackDamage();
+                    int damageToSelf = playerVillager.getAttackDamage() / 4;
+
+                    // change the health of both units
+                    playerVillager.setHealth(playerVillager.getHealth() - damageToPlayer);
+                    attacker.setHealth(attacker.getHealth() - damageToSelf);
+                    player.setTotalKills(player.getTotalKills() + damageToSelf); 
+                    player.setTotalDeaths(player.getTotalDeaths() + damageToPlayer); 
+
+                    // Show battle results
+                    String msg = "Damage taken: " + damageToPlayer;
+                    msg += "\nRemaining soldiers: " + playerVillager.getHealth();
+                    msg += "\n\nDamage dealt: " + damageToSelf;
+                    msg += "\nRemaining enemy soldiers: " + attacker.getHealth();
+                    MessageBox.Show(msg, "Battle results", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    // Remove dead units
+                    if (playerVillager.getHealth() <= 0)
+                    {
+                        Block enemyBlock = Block.findBlock(playerVillager.getXCoordinate(), playerVillager.getYCoordinate(), blocks);
+                        Block.updateBlockAppearance(enemyBlock, attacker.getOwner(), "Grassland", buttons, blocks, enemies, player);
+                        vilToRemove = playerVillager;
+                    }
+
+                    if (attacker.getHealth() <= 0)
+                    {
+                        Block attackerBlock = Block.findBlock(attacker.getXCoordinate(), attacker.getYCoordinate(), blocks);
+                        Block.updateBlockAppearance(attackerBlock, playerVillager.getOwner(), "Grassland", buttons, blocks, enemies, player);
+                        vilToRemove = attacker; 
+                    }
+                    break;
+                }
+            }
+            villagers.Remove(vilToRemove);
+            vilToRemove = null;
+
+            foreach (City targetCity in cities)
+            {
+                if (Villager.findVillagerInBlocks(targetBlock, villagers) == null && targetBlock.getXCoordinate() == targetCity.getXCoordinate() && targetBlock.getYCoordinate() == targetCity.getYCoordinate())
+                {
+                    int damageToPlayer = attacker.getAttackDamage();
+                    int damageToSelf = targetCity.getAttackDamage() / 2;
+
+                    // change health of both units
+                    targetCity.setHealth(targetCity.getHealth() - damageToPlayer);
+                    attacker.setHealth(attacker.getHealth() - damageToSelf);
+                    player.setTotalKills(player.getTotalKills() + damageToPlayer);
+                    player.setTotalDeaths(player.getTotalDeaths() + damageToSelf);
+
+                    // Show battle results
+                    String msg = "Damage taken: " + damageToPlayer;
+                    msg += "\nRemaining soldiers: " + targetCity.getHealth();
+                    msg += "\n\nDamage dealt: " + damageToSelf;
+                    msg += "\nRemaining city soldiers: " + attacker.getHealth();
+                    MessageBox.Show(msg, "Battle results", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    // remove dead unis
+                    if (targetCity.getHealth() <= 0)
+                    {
+                        targetCity.setHealth(800); 
+                        targetCity.setOwner(attacker.getOwner()); 
+                        Block cityBlock = Block.findBlock(targetCity.getXCoordinate(), targetCity.getYCoordinate(), blocks);
+                        Block.updateBlockAppearance(cityBlock, targetCity.getOwner(), "City", buttons, blocks, enemies, player);
+                    }
+
+                    if (attacker.getHealth() <= 0)
+                    {
+                        Block attackerBlock = Block.findBlock(attacker.getXCoordinate(), attacker.getYCoordinate(), blocks);
+                        Block.updateBlockAppearance(attackerBlock, targetCity.getOwner(), "Grassland", buttons, blocks, enemies, player);
+                        vilToRemove = attacker; 
+                    }
+                    break;
+                }
+            }
         }
 
     }

@@ -118,9 +118,7 @@
   <ItemGroup>
     <Resource Include="Assets\Images\GameTitle.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\Sounds\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Assets\Images\city.jpg" />
     <Resource Include="Assets\Images\grassland.jpg" />

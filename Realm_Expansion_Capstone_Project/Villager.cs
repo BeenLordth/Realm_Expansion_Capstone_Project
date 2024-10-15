@@ -68,11 +68,19 @@ namespace Realm_Expansion_Capstone_Project
             Owner = owner;
         }
 
+        /// <summary>
+        /// identify if villager cn ataack or not
+        /// </summary>
+        /// <returns></returns>
         public Boolean getCanAttack()
         {
             return CanAttack;
         }
 
+        /// <summary>
+        /// change if villager can attack
+        /// </summary>
+        /// <param name="canattack"></param>
         public void setCanAttack(Boolean canattack)
         {
             CanAttack = canattack;
@@ -221,6 +229,12 @@ namespace Realm_Expansion_Capstone_Project
             TravelRange = newTravelRange;
         }
 
+        /// <summary>
+        /// find a villager within a list
+        /// </summary>
+        /// <param name="villager">villager to be found</param>
+        /// <param name="villagers">list of villages to find villager in</param>
+        /// <returns></returns>
         public static Villager findVillagerInBlocks(Block villager, List<Villager> villagers)
         {
             foreach (Villager village in villagers)
@@ -233,6 +247,12 @@ namespace Realm_Expansion_Capstone_Project
             return null;
         }
 
+        /// <summary>
+        /// change the coordinates of a unit
+        /// </summary>
+        /// <param name="oldVillage">old village </param>
+        /// <param name="newVillage">new village</param>
+        /// <param name="villagers">list of villages to find the villages in</param>
         public static void changeCoordinates(Villager oldVillage, Block newVillage, List<Villager> villagers)
         {
             foreach (Villager vil  in villagers)
@@ -245,6 +265,11 @@ namespace Realm_Expansion_Capstone_Project
             }
         }
 
+        /// <summary>
+        /// display information about a villager
+        /// </summary>
+        /// <param name="village">villager to display</param>
+        /// <param name="villages">list of villagers to find village in</param>
         public static void displayVillager(Villager village, List<Villager> villages)
         {
             foreach(Villager vil in villages)
@@ -261,13 +286,27 @@ namespace Realm_Expansion_Capstone_Project
             }
         }
 
+        /// <summary>
+        /// determine how the villager attacks different enemy types
+        /// </summary>
+        /// <param name="village">attacker</param>
+        /// <param name="target">target</param>
+        /// <param name="villages">list of villages to get info</param>
+        /// <param name="cities">list of cities to get info </param>
+        /// <param name="watchtowers">list of tower to get info</param>
+        /// <param name="player">player instance</param>
+        /// <param name="blocks">array of blocks to update info</param>
+        /// <param name="buttons">array of buttons to update info</param>
+        /// <param name="enemies">array of enemies to get info</param>
         public static void attackEnemy(Villager village, Block target, List<Villager> villages, List<City> cities, List<WatchTower> watchtowers, Player player, Block[] blocks, Button[] buttons, Enemy[] enemies)
         {
             Villager vilToRemove = null;
+            //find enemy village unit, if it exists
             foreach (Villager TargetVil in villages)
             {
                 if (target.getXCoordinate() == TargetVil.getXCoordinate() && target.getYCoordinate() == TargetVil.getYCoordinate())
                 {
+                    //find the attacking village
                     foreach (Villager AttackingVillage in villages)
                     {
                         if (village.getXCoordinate() == AttackingVillage.getXCoordinate() && village.getYCoordinate() == AttackingVillage.getYCoordinate())
@@ -275,17 +314,20 @@ namespace Realm_Expansion_Capstone_Project
                             int damageToEnemy = AttackingVillage.getAttackDamage();
                             int damageToSelf = TargetVil.getAttackDamage() / 4;
 
+                            //change the unit health of each one
                             TargetVil.setHealth(TargetVil.getHealth() - damageToEnemy);
                             AttackingVillage.setHealth(AttackingVillage.getHealth() - damageToSelf);
                             player.setTotalKills(player.getTotalKills() + damageToEnemy);
                             player.setTotalDeaths(player.getTotalDeaths() + damageToSelf);
 
+                            // display battle results
                             String msg = "Damage taken: " + damageToSelf;
                             msg += "\nRemaining soldiers: " + AttackingVillage.getHealth();
                             msg += "\n\nDamage dealt: " + damageToEnemy;
                             msg += "\nRemaining enemy soldiers: " + TargetVil.getHealth();
                             MessageBox.Show(msg, "Battle results", MessageBoxButton.OK, MessageBoxImage.Information);
 
+                            // get rid of dead units
                             if(TargetVil.getHealth() <= 0)
                             {
                                 Block enemyBlock = Block.findBlock(TargetVil.getXCoordinate(), TargetVil.getYCoordinate(), blocks);
@@ -305,11 +347,12 @@ namespace Realm_Expansion_Capstone_Project
             }
             villages.Remove(vilToRemove);
             vilToRemove = null;
-
+            //find the enemy city, if it exists
             foreach (City TargetCity in cities)
             {
                 if (target.getXCoordinate() == TargetCity.getXCoordinate() && target.getYCoordinate() == TargetCity.getYCoordinate())
                 {
+                    // find the attacking village
                     foreach (Villager AttackingVillage in villages)
                     {
                         if (village.getXCoordinate() == AttackingVillage.getXCoordinate() && village.getYCoordinate() == AttackingVillage.getYCoordinate())
@@ -317,17 +360,20 @@ namespace Realm_Expansion_Capstone_Project
                             int damageToEnemy = AttackingVillage.getAttackDamage();
                             int damageToSelf = TargetCity.getAttackDamage() / 2;
 
+                            //change the unit health of each one
                             TargetCity.setHealth(TargetCity.getHealth() - damageToEnemy);
                             AttackingVillage.setHealth(AttackingVillage.getHealth() - damageToSelf);
                             player.setTotalKills(player.getTotalKills() + damageToEnemy);
                             player.setTotalDeaths(player.getTotalDeaths() + damageToSelf);
 
+                            //display the battle results
                             String msg = "Damage taken: " + damageToSelf;
                             msg += "\nRemaining soldiers: " + AttackingVillage.getHealth();
                             msg += "\n\nDamage dealt: " + damageToEnemy;
                             msg += "\nRemaining city soldiers: " + TargetCity.getHealth();
                             MessageBox.Show(msg, "Battle results", MessageBoxButton.OK, MessageBoxImage.Information);
 
+                            // get rid of dead units
                             if(TargetCity.getHealth() <= 0)
                             {
                                 TargetCity.setHealth(800);
@@ -347,10 +393,12 @@ namespace Realm_Expansion_Capstone_Project
                 }
             }
             villages.Remove(vilToRemove);
+            //find the enemy tower, if it exists
             foreach (WatchTower TargetTower in watchtowers)
             {
                 if (target.getXCoordinate() == TargetTower.getXCoordinate() && target.getYCoordinate() == TargetTower.getYCoordinate())
                 {
+                    // find the attacking village
                     foreach (Villager AttackingVillage in villages)
                     {
                         if (village.getXCoordinate() == AttackingVillage.getXCoordinate() && village.getYCoordinate() == AttackingVillage.getYCoordinate())
@@ -358,11 +406,13 @@ namespace Realm_Expansion_Capstone_Project
                             int damageToEnemy = AttackingVillage.getAttackDamage();
                             int damageToSelf = TargetTower.getAttackDamage() / 4;
 
+                            // update the unit health of each one
                             TargetTower.setHealth(TargetTower.getHealth() - damageToEnemy);
                             AttackingVillage.setHealth(AttackingVillage.getHealth() - damageToSelf);
                             player.setTotalKills(player.getTotalKills() + damageToEnemy);
                             player.setTotalDeaths(player.getTotalDeaths() + damageToSelf);
 
+                            // display the battle results
                             String msg = "Damage taken: " + damageToSelf;
                             msg += "\nRemaining soldiers: " + AttackingVillage.getHealth();
                             msg += "\n\nDamage dealt: " + damageToEnemy;
@@ -375,11 +425,22 @@ namespace Realm_Expansion_Capstone_Project
             }
         }
 
+        /// <summary>
+        /// take a city if it is no occupied
+        /// </summary>
+        /// <param name="space">block of unit</param>
+        /// <param name="occupied">list of occupied cities</param>
+        /// <param name="unoccupied">list of not occupied cities</param>
+        /// <param name="Blocks">array of blocks to update info</param>
+        /// <param name="Buttons">array of buttons to update info</param>
+        /// <param name="Enemies">array of enemies to get info</param>
+        /// <param name="Player">player instance</param>
         public static void ClaimCity(Block space, List<City> occupied, List<City> unoccupied, Block[] Blocks, Button[] Buttons, Enemy[] Enemies, Player Player)
         {
             int unitX = space.getXCoordinate();
             int unitY = space.getYCoordinate();
 
+            // go through units surrounding blocks and see if one of them is a lone city
             for (int x = -1; x <= 1; x++)
             {
                 for (int y = -1; y <= 1; y++)
@@ -396,6 +457,7 @@ namespace Realm_Expansion_Capstone_Project
 
                         for (int i = 0; i < unoccupied.Count; i++)
                         {
+                            // take city if it is alone and within unit range
                             if (unoccupied[i].getXCoordinate() == surroundingBlock.getXCoordinate() && unoccupied[i].getYCoordinate() == surroundingBlock.getYCoordinate())
                             {
                                 unoccupied[i].setOwner(space.getOwner());

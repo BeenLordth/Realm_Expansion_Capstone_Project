@@ -25,11 +25,21 @@ namespace Realm_Expansion_Capstone_Project
             InitializeComponent();
         }
 
+        /// <summary>
+        /// shut down the whole game when the player clicks on quit
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">e</param>
         private void MM_quit_btn_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
 
+        /// <summary>
+        /// lead the player to the settings screen when clicked on play
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">e</param>
         private void MM_play_btn_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();

@@ -163,12 +163,18 @@ namespace Realm_Expansion_Capstone_Project
             AttackDamage = newAttackDamage;
         }
 
+        /// <summary>
+        /// find a city and display it's information on a pop up box. 
+        /// </summary>
+        /// <param name="city">the city that information is needed from</param>
+        /// <param name="cities">the list to search for the city</param>
         public static void displayCity(Block city, List<City> cities)
         {
             foreach(City citi in cities)
             {
                 if (citi.getXCoordinate() == city.getXCoordinate() && citi.getYCoordinate() == city.getYCoordinate())
                 {
+                    // build the message that will be displayed in the message box
                     String msg = "Health: " + citi.getHealth();
                     msg += "\nAttack Damage: " + citi.getAttackDamage();
                     msg += "\nAttack Range: " + citi.getAttackRange();

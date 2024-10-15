@@ -24,11 +24,21 @@ namespace Realm_Expansion_Capstone_Project
             InitializeComponent();
         }
 
+        /// <summary>
+        /// go back to main menu
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">e</param>
         private void S_quit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// go to the game screen with the needed information
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">e</param>
         private void S_play_Click(object sender, RoutedEventArgs e)
         {
             String input = S_name_txtbx.Text.ToString();
@@ -40,6 +50,11 @@ namespace Realm_Expansion_Capstone_Project
             }
         }
 
+        /// <summary>
+        /// validate the name to make sure it is usable
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         private Boolean isValidName(String input)
         {
             char[] inputChars = new char[input.Length];
@@ -49,6 +64,7 @@ namespace Realm_Expansion_Capstone_Project
                 inputChars[i] = input[i];
             }
 
+            // make sure the name is not too short or too long
             if(input.Length < 1)
             {
                 S_warning_label.Visibility = Visibility.Visible;
@@ -61,6 +77,7 @@ namespace Realm_Expansion_Capstone_Project
                 return false;
             }
 
+            // make sure that only letters are typed
             foreach (char i in inputChars)
             {
                 if (!char.IsLetter(i))
@@ -74,6 +91,10 @@ namespace Realm_Expansion_Capstone_Project
             return true;
         }
 
+        /// <summary>
+        /// determine which radio button is selected 
+        /// </summary>
+        /// <returns></returns>
         private int getEnemyCount()
         {
             if (S_enemies_one_btn.IsChecked == true)
